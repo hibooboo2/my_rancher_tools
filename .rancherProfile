@@ -1,0 +1,35 @@
+#!/bin/bash
+
+boot2docker up 2&>1 /dev/null
+$(boot2docker shellinit)
+export LIQUIBASE_HOME="/usr/local/bin/liquibase"
+export ${RANCH_HOME:="${HOME}/code/rancherio"}
+export FARMER_TOOLS="$HOME/code/rancherio/build-tools/bin"
+export ACRE_RANCH="$RANCH_HOME/10acre-ranch/bin"
+export FARMER_TOOLS_OPT="$HOME/opt_bin"
+export SPY_HOME="$RANCH_HOME/python-agent"
+export PATH="${PATH}:${FARMER_TOOLS}:${FARMER_TOOLS_OPT}:${ACRE_RANCH}"
+export HOST_API_ROOT="$RANCH_HOME/host-api"
+
+export CATTLE_DOCKER_USE_BOOT2DOCKER=true
+export CATTLE_HOME=$HOME/cattle-home
+[[ ! -d "${CATTLE_HOME}" ]] && mkdir $CATTLE_HOME
+
+
+export ${CATTLE_ROOT:="$RANCH_HOME/cattle"}
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
+export Build_Tools="$RANCH_HOME/build-tools/bin"
+
+alias dockerPurge='docker rm -fv $(docker ps -qa)'
+alias dockerClean='docker rmi $(docker images -q -f dangling=true)'
+alias moo="cd $CATTLE_ROOT"
+alias mooGo="cd $HOST_API_ROOT"
+alias mooRun="$CATTLE_ROOT/scripts/build;$CATTLE_ROOT/scripts/run"
+alias mooTest="[[ ! -z '$(declare -F | grep deactivate)' ]] && deactivate;cd $CATTLE_ROOT/tests/integration;rm -rf .tox ;[[ ! -z '$(declare -F | grep activateVenv)' ]] && activateVenv && echo hello;tox"
+alias rancherAgent="$CATTLE_ROOT/tools/development/register-boot2docker.sh; sleep 10; docker logs -f rancher-agent"
+alias cleanDB="$CATTLE_ROOT/resources/content/db/mysql/drop_tables.sh"
+alias cleanDBbase="$CATTLE_ROOT/resources/content/db/mysql/drop_tables_base.sh"
+alias goCloud="gcloud --project rancher-dev compute ssh james-instance-10acre-master-0"
+alias openCloud="open http://$(gce-10acre-ranch -c james-instance -i):8080"
+alias jooq="${CATTLE_ROOT}/code/iaas/model/codegen.sh"
+alias liquibaseDump="${CATTLE_ROOT}/resources/content/db/liquibase-dump.sh"

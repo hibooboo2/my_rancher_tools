@@ -1,0 +1,10 @@
+#!/bin/bash
+echo Good Commit/branch/tag?
+read GOOD_COMMIT
+echo Bad Commit/branch/tag?
+read BAD_COMMIT
+echo What test do you want to run?
+read CATTLE_TEST_TO_RUN
+export CATTLE_TEST_TO_RUN=${CATTLE_TEST_TO_RUN}
+git bisect start $BAD_COMMIT $GOOD_COMMIT
+git bisect run cattleBug.sh

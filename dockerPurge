@@ -1,0 +1,14 @@
+#!/bin/sh
+
+cd $(dirname $0)/
+./safteyChecks.sh
+
+rancher_agent=$(docker inspect rancher-agent | jq -r .[0].Id)
+rancher_agent=${rancher_agent:0:12}
+rancher_agent_state=$(docker inspect rancher-agent-state | jq -r .[0].Id)
+rancher_agent_state=${rancher_agent_state:0:12}
+
+remove=$(docker ps -qa | grep -v ${rancher_agent} | grep -v ${rancher_agent_state})
+
+[[ -z "${1}" ]] && [[ ! -z "${remove}" ]] && docker rm -fv ${remove}
+[[ "${1}" == "-a" ]] && docker rm -fv $(docker ps -qa)
