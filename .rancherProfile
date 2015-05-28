@@ -19,7 +19,7 @@ export ${CATTLE_ROOT:="$RANCH_HOME/cattle"}
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
 export Build_Tools="$RANCH_HOME/build-tools/bin"
 
-alias dockerPurge='docker rm -fv $(docker ps -qa)'
+#alias dockerPurge='docker rm -fv $(docker ps -qa)'
 alias dockerClean='docker rmi $(docker images -q -f dangling=true)'
 alias moo="cd $CATTLE_ROOT"
 alias mooGo="cd $HOST_API_ROOT"
