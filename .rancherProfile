@@ -3,10 +3,11 @@
 boot2docker up 2&>1 /dev/null
 $(boot2docker shellinit)
 export LIQUIBASE_HOME="/usr/local/bin/liquibase"
-export ${RANCH_HOME:="${HOME}/code/rancherio"}
-export FARMER_TOOLS="$HOME/code/rancherio/build-tools/bin"
-export ACRE_RANCH="$RANCH_HOME/10acre-ranch/bin"
-export FARMER_TOOLS_OPT="$HOME/opt_bin"
+export RANCH_HOME="${HOME}/code/rancherio"
+export FARMER_TOOLS="${RANCH_HOME}/build-tools/bin"
+export ACRE_RANCH="${RANCH_HOME}/10acre-ranch/bin"
+echo $(dirname $0)
+export FARMER_TOOLS_OPT="${HOME}/my_rancher_tools"
 export SPY_HOME="$RANCH_HOME/python-agent"
 export PATH="${PATH}:${FARMER_TOOLS}:${FARMER_TOOLS_OPT}:${ACRE_RANCH}"
 export HOST_API_ROOT="$RANCH_HOME/host-api"
