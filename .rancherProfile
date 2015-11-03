@@ -3,7 +3,7 @@
 boot2docker up 2&>1 /dev/null
 $(boot2docker shellinit)
 export LIQUIBASE_HOME="/usr/local/bin/liquibase"
-export RANCH_HOME="${HOME}/code/rancherio"
+export RANCH_HOME="${HOME}/code/rancher"
 export FARMER_TOOLS="${RANCH_HOME}/build-tools/bin"
 export ACRE_RANCH="${RANCH_HOME}/10acre-ranch/bin"
 echo $(dirname $0)
@@ -16,7 +16,7 @@ export CATTLE_DOCKER_USE_BOOT2DOCKER=true
 export CATTLE_HOME=$HOME/cattle-home
 
 
-export ${CATTLE_ROOT:="$RANCH_HOME/cattle"}
+export CATTLE_ROOT="$RANCH_HOME/cattle"
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
 export Build_Tools="$RANCH_HOME/build-tools/bin"
 
@@ -28,6 +28,7 @@ alias mooRun="$CATTLE_ROOT/scripts/build;$CATTLE_ROOT/scripts/run"
 alias mooTest="[[ ! -z '$(declare -F | grep deactivate)' ]] && deactivate;cd $CATTLE_ROOT/tests/integration;rm -rf .tox ;[[ ! -z '$(declare -F | grep activateVenv)' ]] && activateVenv && echo hello;tox"
 alias rancherAgent="$CATTLE_ROOT/tools/development/register-boot2docker.sh; sleep 10; docker logs -f rancher-agent"
 alias cleanDB="$CATTLE_ROOT/resources/content/db/mysql/drop_tables.sh"
+alias cattleSettings="cat $CATTLE_ROOT/cattle.sql.dev | mysql -u root cattle"
 alias cleanDBbase="$CATTLE_ROOT/resources/content/db/mysql/drop_tables_base.sh"
 alias jooq="${CATTLE_ROOT}/code/iaas/model/codegen.sh"
 alias liquibaseDump="${CATTLE_ROOT}/resources/content/db/liquibase-dump.sh"
